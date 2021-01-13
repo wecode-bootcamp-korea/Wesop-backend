@@ -11,7 +11,7 @@ class Category(models.Model):
     
 class SubCategory(models.Model):
     name     = models.CharField(max_length=20)
-    category = models.ForeignKey(Category_type, on_delete=models.CASCADE, related_name="sub_categories")
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="sub_categories")
 
     class Meta:
         db_table = 'sub_categories'
