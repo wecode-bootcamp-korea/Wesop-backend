@@ -33,7 +33,7 @@ class State(models.Model):
 
 class CheckOut(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='checkouts')
-    total = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+    total = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
         db_table = 'checkouts'
