@@ -20,7 +20,7 @@ class Address(models.Model):
         db_table = 'addresses'
 
 class Country(models.Model):
-    name   = models.CharField(max_length=45)
+    name   = models.CharField(max_length=45, default="KO-KR")
 
     class Meta:
         db_table = 'countries'

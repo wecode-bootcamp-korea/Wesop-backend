@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "/Users/iseong-yong/miniconda3/envs/wesop/bin/python",
+    "python.linting.pylintEnabled": true,
+"python.linting.pylintArgs": [
+    "--disable=C0111", // missing docstring
+    "--load-plugins=pylint_django,pylint_celery",
+ ],
+}
