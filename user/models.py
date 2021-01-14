@@ -11,17 +11,16 @@ class User(models.Model):
 
 class Address(models.Model):
     user     = models.ForeignKey('User', on_delete=models.CASCADE)
+    country  = models.ForeignKey('Country', on_delete=models.CASCADE)
     address  = models.CharField(max_length = 200)
-    zipcode = models.CharField(max_length = 45)
+    zipcode  = models.CharField(max_length = 45)
     phone    = models.CharField(max_length = 45)
 
     class Meta:
         db_table = 'addresses'
 
 class Country(models.Model):
-    adress = models.OneToOneField('Address', on_delete=models.CASCADE)
     name   = models.CharField(max_length=45)
-    number = models.IntegerField()
 
     class Meta:
         db_table = 'countries'

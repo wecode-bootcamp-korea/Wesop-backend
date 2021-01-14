@@ -27,7 +27,7 @@ class Product(models.Model):
     manual         = models.TextField()
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     subcategories  = models.ManyToManyField(SubCategory, related_name="products")
-    skins          = models.ManyToManyField("Skin", related_name="products")
+    skin_types     = models.ManyToManyField("Skin", related_name="products")
     feels          = models.ManyToManyField("Feel", related_name="products")
     ingredients    = models.ManyToManyField("Ingredient", related_name="products")
     textures       = models.ManyToManyField("Texture", related_name="products")
