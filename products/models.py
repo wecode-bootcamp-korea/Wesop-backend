@@ -1,7 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'categories'
@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
     
 class SubCategory(models.Model):
-    name     = models.CharField(max_length=20)
+    name     = models.CharField(max_length=50)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="sub_categories")
 
     class Meta:
@@ -20,7 +20,7 @@ class SubCategory(models.Model):
         return self.name
 
 class Product(models.Model):
-    name           = models.CharField(max_length=20)
+    name           = models.CharField(max_length=50)
     size           = models.CharField(max_length=20)
     dosage         = models.CharField(max_length=20)
     description    = models.TextField()
@@ -51,7 +51,7 @@ class Media(models.Model):
         return f"media_{self.pk}"
 
 class Skin(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
     
     class Meta:
         db_table = 'skin_types'
@@ -60,7 +60,7 @@ class Skin(models.Model):
         return self.name
 
 class Feel(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'feels'
@@ -69,7 +69,7 @@ class Feel(models.Model):
         return self.name
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'ingredients'
@@ -78,7 +78,7 @@ class Ingredient(models.Model):
         return self.name
 
 class Texture(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
  
     class Meta:
         db_table = 'textures'
@@ -87,7 +87,7 @@ class Texture(models.Model):
         return self.name
     
 class Aroma(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=50)
 
     class Meta:
         db_table = 'aromas'

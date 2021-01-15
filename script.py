@@ -1,133 +1,111 @@
+import os
 import csv
 
-filename = "wesop.csv"
-f = open(filename, "w", encoding="utf-8-sig", newline="")
-writer = csv.writer(f)
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "wesop.settings")
 
-writer.writerow(
-    "category-subcategory-name-size-description-skin_type-feel-ingredient-manual-dosage-texture-aroma-url".split("-")
-)
+import django
 
-category = "스킨"
-subcategory = "클렌저"
-url = 'abc.com'
-name = [
-    "아이 리무버", 
-    "파슬리 씨드 페이셜 클렌징 오일", 
-    "퓨리파잉 페이셜 크림 클렌저", 
-    "페뷸러스 페이스 클렌저", 
-    "파슬리 씨드 페이셜 클렌저",
-    "어메이징 페이스 클렌저",
-    "인 투 마인즈 페이셜 클렌저",
-    "젠틀 페이셜 클렌징 밀크 ",
-    ]
-size = [
-    "60 mL",
-    "200 mL",
-    "100 mL",
-    "100 mL/200 mL",
-    "100 mL/200 mL",
-    "100 mL/200 mL",
-    "100 mL/200 mL",
-    "100 mL/200 mL",
-    ]
-description = [
-    "눈 주위의 민감한 피부를 달래고 진정시켜주는 마트리카리아가 포함된 부드러운 오일 제형의 아이 메이크업 리무브", 
-    "진한 메이크업도 부드럽고 깨끗하게 닦아주는 오일 타입의 클렌저",
-    "가벼운 메이크업을 지워주고, 피부에 남은 잔여물을 말끔하게 씻어내어 피부를 부드럽고 촉촉하게 가꿔 주는 크림 클렌저",
-    "수분 공급을 위한 보태니컬 성분이 함유된 부드러운 타입의 젤 클렌저",
-    "피부를 건조하지 않고, 부드럽게 세정해주는 젤 클렌저",
-    "부드러운 거품이 피부를 효과적으로 세정하고 피부의 균형을 잡아주는 데일리 클렌저",
-    "피부의 수분을 빼앗지 않으면서도 모공을 부드럽고 효과적으로 세정해주는 젤 타입 클렌저",
-    "진정 효과가 뛰어난 보태니컬 성분이 함유되어 순한 데일리 클렌저로 사용하기 적합합니다. 손쉽게 메이크업을 지우고 편안하게 씻어냅니다",
-    ]
-skin_type = [
-    "모든 피부, 메이크업을 한 피부",
-    "중성, 복합성, 건성, 민감성 피부",
-    "중성, 건성 피부",
-    "중성, 건성 피부",
-    "중성, 복합성, 문제성 피부",
-    "지성, 복합성 피부, 덥고 습한 날씨의 피부",
-    "복합성 피부",
-    "모든 피부 타입, 건조하고 민감한 피부",
-    ]
-feel = [
-    "진정된, 생기있는", 
-    "부드러운, 진정된",
-    "탄력, 유연, 부드러운",
-    "상쾌한, 진정된, 부드러운",
-    "매끄러운, 부드러운", 
-    "산뜻한, 매끄러운",
-    "산뜻한, 매끄러운",
-    "산뜻한, 부드러운, 상쾌한",
-    ]
-ingredient = [
-    "그레이프 씨드, 토코페롤, 마트리카리아꽃오일",
-    "라벤더, 화이트 클레이, 카모마일",
-    "라벤더, 화이트 클레이, 카모마일",
-    "라벤더, 화이트 클레이, 카모마일",
-    "베르가모트 오일, 캐모마일 꽃 오일, 로즈마리잎",
-    "라벤더, 화이트 클레이, 카모마일",
-    "위치하젤, 살리실릭애씨드, 세이지 리프",
-    "판테놀, 포도씨 오일, 웨스트 오스트레일리아 산달우드 목부오일",
-     ]
-manual = [
-    "젖은 화장솜에 덜어 아이 메이크업 제품이 용해될 때까지 기다렸다가 다 닦아냅니다",
-    "메이크업을 지울 때는 얼굴에 직접 발라 마사지 한 후 물로 씻어냅니다. 일반 세안 시에는 손바닥에 물과 함께 섞어 밀키한 에멀젼으로 만들어 얼굴과 목에 마사지 한 후 물로 씻어냅니다", 
-    "매주 2회 사용해주세요. 제품을 바른 후 토너를 적신 화장솜으로 닦아내어 피부 위에 가볍고 풍부한 수분막 형성해줍니다.", 
-    "아침, 저녁으로 깨끗한 손에 덜어 거품을 낸 후 물로 씻어 냅니다",
-    "아침, 저녁으로 깨끗한 손에 덜어 거품을 낸 후 세안합니다",
-    "아침, 저녁으로 깨끗한 손에 덜어 거품을 낸 후 세안합니다",
-    "아침, 저녁으로 깨끗한 손에 덜어 거품을 낸 후 물로 씻어냅니다",
-    "아침과 저녁 사용 전에 흔들어 주세요. 이후 소량을 손에 덜어 얼굴과 목을 마사지합니다. 미지근한 물로 씻어 내거나 젖은 화장솜을 이용해 닦아냅니다",
-    ]
-dosage = [
-    "5-7방울", 
-    "한 티스푼", 
-    "반 티스푼 또는 원하는 만큼", 
-    "반 티스푼", 
-    "반 티스푼",
-    "반 티스푼",
-    "반 티스푼",
-    "반 티스푼",
-    ]
-texture = [
-    "가벼운, 오일 타입", 
-    "수용성, 오일 타입", 
-    "거품이 없는, 크림 제형", 
-    "거품이 적은, 젤 타입", 
-    "거품이 적당한, 젤 타입",
-    "거품이 적은, 젤 타입",
-    "가벼운, 젤 타입",
-    "거품이 없는, 수용성 에멀젼",
-    ]
-aroma = [
-    "허브향, 플로랄, 너티", 
-    "허브향, 플로랄, 너티", 
-    "상쾌한, 플로랄, 우드향", 
-    "허브향, 시트러스, 상쾌함", 
-    "허브, 플로랄, 프레시",
-    "시트러스, 플로랄, 프레시",
-    "프레시, 허브",
-    "마일드, 우디, 허브",
-    ]
-NUM_OF_PRODUCTS = len(name)
-for index in range(NUM_OF_PRODUCTS):
-    writer.writerow([
-        category, 
-        subcategory, 
-        name[index], 
-        size[index],
-        description[index], 
-        skin_type[index], 
-        feel[index], 
-        ingredient[index],
-        manual[index],
-        dosage[index],
-        texture[index],
-        aroma[index],
-        url
-        ])
+django.setup()
+
+from products.models import (Category,
+                             SubCategory,
+                             Product,
+                             Media,
+                             Skin,
+                             Feel,
+                             Ingredient,
+                             Texture,
+                             Aroma)
 
 
+with open("wesop.csv", newline='') as f:
+	rows = csv.reader(f, delimiter=',')
+	rows = list(rows)[1:]
 
+Category.objects.get_or_create(name=rows[0][0])
+SubCategory.objects.get_or_create(name=rows[0][1], category=Category.objects.get(name=rows[1][0]))
+
+for row in rows:
+    Product.objects.get_or_create(
+                                name=row[2], 
+                                size=row[3], 
+                                description=row[4],
+                                manual=row[8],
+                                price=row[9],
+                                dosage=row[10],
+                                )
+for row in rows:
+    Media.objects.get_or_create(url=row[13], products=Product.objects.get(name=row[2]))
+
+def make_row_unique_el(row):
+    result = []
+    for string in row:
+        result.extend(string.split(','))
+
+    for index in range(len(result)):
+        result[index] = result[index].strip()
+
+    result = list(set(result))
+    return result
+
+skin_type_row = [row[5] for row in rows]
+skin_type_row_unique = make_row_unique_el(skin_type_row)
+
+feel_row = [row[6] for row in rows]
+feel_row_unique = make_row_unique_el(feel_row)
+
+ingredient_row = [row[7] for row in rows]
+ingredient_row_unique = make_row_unique_el(ingredient_row)
+
+texture_row = [row[11] for row in rows]
+texture_row_unique = make_row_unique_el(texture_row)
+
+aroma_row = [row[12] for row in rows]
+aroma_row_unique = make_row_unique_el(aroma_row)
+
+for skin in skin_type_row_unique:
+    Skin.objects.get_or_create(name=skin)
+
+for feel in feel_row_unique:
+    Feel.objects.get_or_create(name=feel)
+
+for ingre in ingredient_row_unique:
+    Ingredient.objects.get_or_create(name=ingre)
+
+for texture in texture_row_unique:
+    Texture.objects.get_or_create(name=texture)
+
+for aroma in aroma_row_unique:
+    Aroma.objects.get_or_create(name=aroma)
+
+for row in rows:
+    product = Product.objects.get(name=row[2])
+    skin_arr = row[5].split(',')
+    for index in range(len(skin_arr)):
+        skin_arr[index] = skin_arr[index].strip()
+    
+    skin_set = [Skin.objects.get(name=skin) for skin in skin_arr]
+    for skin in skin_set:
+        skin.products.add(product)
+        skin.save()    
+
+def set_many_to_many(rows, index, klass):
+    for row in rows:
+        product = Product.objects.get(name=row[2])
+        field_arr = row[index].split(',')
+        for idx in range(len(field_arr)):
+            field_arr[idx] = field_arr[idx].strip()
+        
+        field_set = [klass.objects.get(name=element) for element in field_arr]
+
+        for field in field_set:
+            field.products.add(product)
+            field.save()
+    
+set_many_to_many(rows, 6, Feel)
+set_many_to_many(rows, 7, Ingredient)
+set_many_to_many(rows, 11, Texture)
+set_many_to_many(rows, 12, Aroma)
+
+sub_category = SubCategory.objects.get(pk=1)
+sub_category.products.add(*Product.objects.all())
