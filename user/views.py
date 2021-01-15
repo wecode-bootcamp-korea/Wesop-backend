@@ -53,8 +53,8 @@ class UserSignUpView(View):
 
 class UserSignInView(View):
     def post(self, request):
-        data = json.loads(request.body)
-        email = data.get('email')
+        data     = json.loads(request.body)
+        email    = data.get('email')
         password = data.get('password')
                 
         signin_user = User.objects.get(email=email)
