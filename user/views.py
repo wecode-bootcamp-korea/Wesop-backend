@@ -37,13 +37,13 @@ class UserSignUpView(View):
         last_name  = data.get('last_name')
         first_name = data.get('first_name')
 
-        password_regex = re.compile('^(?=.*[A-Z])(?=.*\d){8,}$')
+        password_regex = re.compile('^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$')
         if not password_regex.match(password):
             return JsonResponse({'message': 'INVALID_PASSWORD'}, status=400)
         encoded_pw = password.encode('utf-8')
         hashed_pw  = bcrypt.hashpw(encoded_pw, bcrypt.gensalt())
-        encrpt_pw  = hashed_pw.decode('utf-8')
-        User.objects.create(
+        encrypt_pw  = hashed_pw.decode('utf-8')
+        User.objects.get_or_create(
             email      = email,
             password   = encrypt_pw,
             last_name  = last_name,
@@ -58,9 +58,11 @@ class UserSignInView(View):
         password = data.get('password')
                 
         signin_user = User.objects.get(email=email)
-        if bcryt.checkpw(password.encode(), signin_user.password.encode()):
-            token = jwt.endcode({'id':signin_user.id}, SECRET_KEY, algorithm='HS256')
+        if bcrypt.checkpw(password.encode(), signin_user.password.encode()):
+            token = jwt.encode({'id':signin_user.id}, SECRET_KEY, algorithm='HS256')
             return JsonResponse({'message':'SIGN_IN_SUCCESS', 'TOKEN':token}, status = 200)
+        else:
+            return JsonResponse({'message':'INVALID_PASSWORD'}, status=400)
                 
 
 
