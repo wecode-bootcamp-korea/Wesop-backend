@@ -17,7 +17,6 @@ from products.models import (Category,
                              Texture,
                              Aroma)
 
-
 with open("wesop.csv", newline='') as f:
 	rows = csv.reader(f, delimiter=',')
 	rows = list(rows)[1:]
