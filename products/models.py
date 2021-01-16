@@ -41,7 +41,7 @@ class Product(models.Model):
 
 class Media(models.Model):
     url        = models.URLField(max_length=200)
-    mediatype = models.CharField(max_length=200, default="image")
+    media_type = models.CharField(max_length=200, default="image")
     products   = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="media")
       
     class Meta:

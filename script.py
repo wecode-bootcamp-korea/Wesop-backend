@@ -34,7 +34,11 @@ for row in rows:
                                 dosage=row[10],
                                 )
 for row in rows:
-    Media.objects.get_or_create(url=row[13], products=Product.objects.get(name=row[2]))
+    urls = row[13].split(',')
+    for index range(len(urls)):
+        urls[index] = urls[index].strip()
+    for url in urls:
+        Media.objects.get_or_create(url=url, products=Product.objects.get(name=row[2]))
 
 def make_row_unique_el(row):
     result = []
