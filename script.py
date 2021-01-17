@@ -21,8 +21,9 @@ with open("wesop.csv", newline='') as f:
 	rows = csv.reader(f, delimiter=',')
 	rows = list(rows)[1:]
 
-Category.objects.get_or_create(name=rows[0][0])
-SubCategory.objects.get_or_create(name=rows[0][1], category=Category.objects.get(name=rows[1][0]))
+for row in rows:
+    Category.objects.get_or_create(name=row[0])
+    SubCategory.objects.get_or_create(name=row[1], category=Category.objects.get(name=row[0]))
 
 for row in rows:
     Product.objects.get_or_create(
@@ -35,7 +36,7 @@ for row in rows:
                                 )
 for row in rows:
     urls = row[13].split(',')
-    for index range(len(urls)):
+    for index in range(len(urls)):
         urls[index] = urls[index].strip()
     for url in urls:
         Media.objects.get_or_create(url=url, products=Product.objects.get(name=row[2]))
@@ -90,7 +91,7 @@ for row in rows:
     skin_set = [Skin.objects.get(name=skin) for skin in skin_arr]
     for skin in skin_set:
         skin.products.add(product)
-        skin.save()    
+        skin.save()
 
 def set_many_to_many(rows, index, klass):
     for row in rows:
@@ -110,5 +111,6 @@ set_many_to_many(rows, 7, Ingredient)
 set_many_to_many(rows, 11, Texture)
 set_many_to_many(rows, 12, Aroma)
 
-sub_category = SubCategory.objects.get(pk=1)
-sub_category.products.add(*Product.objects.all())
+for row in rows:
+    sub_category = SubCategory.objects.get(name=row[1])
+    sub_category.products.add(Product.objects.get(name=row[2]))
