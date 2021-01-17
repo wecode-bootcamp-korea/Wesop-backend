@@ -115,41 +115,6 @@ class ProductNavView(View):
             return HttpResponse("BAD_REQUEST", status=404)
 
 
-            
-            # products = Product.objects.all()
-
-            # categories = []
-            # for product in products:
-
-            #     subcategories    = product.subcategories.all()
-            #     subcategory_info = {f"subcategory_{i}": subcat.name for i, subcat in enumerate(subcategories)}
-                
-            #     if subcategories:
-            #         category = subcategories[0].category.name
-
-            #     skin_types = product.skin_types.all()
-            #     skin_info  = {f"type_{i}": skin.name for i, skin in enumerate(skin_types)}
-
-            #     feels     = product.feels.all()
-            #     feel_info = {f"feel_{i}": feel.name for i, feel in enumerate(feels)}
-                
-            #     ingredients     = product.ingredients.all()
-            #     ingredient_info = {f"ingredient_{i}": ingredient.name for i, ingredient in enumerate(ingredients)}
-                
-            #     textures     = product.textures.all()
-            #     texture_info = {f"texture_{i}": texture.name for i, texture in enumerate(textures)}
-                
-            #     aromas     = product.aromas.all()
-            #     aroma_info = {f"aroma_{i}": aroma.name for i, aroma in enumerate(aromas)}
-                
-            #     media      = product.media.all()
-            #     media_info = {f"url_{i}": f"{media.url}::{media.media_type}" for i, media in enumerate(media)}
-
-                
-                    
-
-          
-
 class ProductRetrieveView(View):
     def get_object(self, id):
         try:
@@ -277,17 +242,5 @@ class ProductCreateView(View):
         
 
 
-# class ProductDetailView(View):
-#     def get_object(self, id):
-#         try:
-#             return product.objects.get(pk=id)
-#         except:
-#             return HttpResponse("NOT_FOUND", status=404)
-    
-#     def get(self, request, id):
-#         data = json.loads(request.body)
-#         try:
-            
-#             product = Product.objects.filter(pk=id, )
-           
+
 
