@@ -25,7 +25,6 @@ class UserCheckEmailView(View):
         if not User.objects.filter(email=email).exists():
             return JsonResponse({'message': 'signUp'}, status=200)
       
-    
 class UserSignUpView(View):
     def post(self, request):
         data       = json.loads(request.body)
