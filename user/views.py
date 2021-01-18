@@ -62,8 +62,8 @@ class UserSignInView(View):
             return JsonResponse({'message': 'KEY_ERROR'}, status=400)
         if not email_regex.match(email):
             return JsonResponse({'message': 'INVALID_EMAIL'}, status=400)
-        if User.objects.filter(email=email).exists():
-            return JsonResponse({'message': 'EXIST_EMAIL'}, status=400)
+        if not User.objects.filter(email=email).exists():
+            return JsonResponse({'message': 'NOT_EXIST_EMAIL'}, status=400)
                 
         signin_user = User.objects.get(email=email)
         if bcrypt.checkpw(password.encode(), signin_user.password.encode()):
