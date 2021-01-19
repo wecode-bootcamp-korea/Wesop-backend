@@ -36,12 +36,14 @@ class UserSignUpView(View):
         password_regex = re.compile(r'^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$')
         if not password_regex.match(password):
             return JsonResponse({'message': 'INVALID_PASSWORD'}, status=400)
+        if User.objects.filter(email=email).exists():
+            return JsonResponse({'message': 'EXIST_USER'}, status=400)
 
         encoded_pw = password.encode('utf-8')
         hashed_pw  = bcrypt.hashpw(encoded_pw, bcrypt.gensalt())
         encrypt_pw  = hashed_pw.decode('utf-8')
 
-        User.objects.get_or_create(
+        User.objects.create(
             email      = email,
             password   = encrypt_pw,
             last_name  = last_name,
