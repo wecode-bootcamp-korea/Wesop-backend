@@ -1,5 +1,10 @@
 my_settings.py
 wesop.csv
+creation_csv.py
+script.py
+=======
+.DS_Store
+.vscode/settings.json
 # Created by https://www.toptal.com/developers/gitignore/api/django,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=django,python
 
