@@ -9,6 +9,10 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+    @property
+    def subcategory_count(self):
+        return SubCategory.objects.filter(category=self).count()
+    
 class SubCategory(models.Model):
     name     = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="sub_categories")

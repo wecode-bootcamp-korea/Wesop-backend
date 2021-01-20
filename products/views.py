@@ -1,6 +1,6 @@
 import json, re
 
-from django.views     import View
+from django.views     import View 
 from django.http      import JsonResponse, HttpResponse
 from django.db        import connection
 from django.db.models import Prefetch
@@ -126,29 +126,29 @@ class ProductsView(View):
 
 class ProductCategoryView(View):
     def get(self, request):
+        category_objs = Category.objects.prefetch_related('sub_categories').all()
 
         categories = [{
-            "id": category.id,
+            "id"  : category.id,
             "type": category.name,
             "subcategories": [{
-                "id": subcategory.id,
-                "name": subcategory.name,
-                "productList" : [{
-                    "id": product.pk,
-                    "name": product.name,
+                "total"      : Product.objects.filter(subcategories=subcategory).count(),
+                "id"         : subcategory.id,
+                "name"       : subcategory.name,
+                "productList": [{
+                    "id"      : product.pk,
+                    "name"    : product.name,
                     "capacity": product.size,
-                    "price": product.price
+                    "price"   : product.price
                 } for product in subcategory.products.all()]
             } for subcategory in category.sub_categories.all()]
-        } for category in Category.objects.prefetch_related('sub_categories').all()]
+        } for category in category_objs]
+
+        result = [Product.objects.filter(subcategories=SubCategory.objects.get(category=category)).count() for category in category_objs]
                 
         return JsonResponse({
-            "total_cat_sub_prod": [
-                Category.objects.all().count(), 
-                SubCategory.objects.count(), 
-                Product.objects.all().count()
-                ],
-            "categories"        : categories
+            "total_product_cat": result,
+            "categories"       : categories
             }, status=200)
 
 class ProductView(View):
