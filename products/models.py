@@ -40,7 +40,7 @@ class Product(models.Model):
         return self.name
 
 class Media(models.Model):
-    url        = models.URLField(max_length=200, null = True)
+    url        = models.URLField(max_length=200, null=True)
     media_type = models.CharField(max_length=50, null=True)
     products   = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="media")
       

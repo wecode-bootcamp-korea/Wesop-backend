@@ -26,6 +26,7 @@ class ProductsView(View):
 
     def get(self, request):
         data = [value for value in request.GET.values()]
+        
         if data:
             products = [product for product in Product.objects.prefetch_related(Prefetch(
                     'skin_types', queryset=Skin.objects.filter(name__in=data))) if product.skin_types.all()]
@@ -37,8 +38,7 @@ class ProductsView(View):
             'feels',
             'ingredients',
             'textures',
-            'aromas'
-        ).all()
+            'aromas').all()
 
         my_product = [{
                 "id"           : product.pk,
@@ -55,7 +55,10 @@ class ProductsView(View):
                 "ingredients"  : [ingredient.name for ingredient in product.ingredients.all()],
                 "textures"     : [texture.name for texture in product.textures.all()],
                 "aromas"       : [aroma.name for aroma in product.aromas.all()],
-                "media"        : [f"{media.url}::{media.media_type}" for media in product.media.all()],
+                "media"        : [{
+                    "url" : media.url,
+                    "type": media.media_type
+                } for media in product.media.all()],
             } for product in products]
 
         return JsonResponse({"products": my_product}, status=200)
@@ -152,8 +155,8 @@ class ProductView(View):
     def get_object(self, id):
         try:
             return Product.objects.get(pk=id)
-        except:
-            return HttpResponse("NOT_FOUND", stauts=404)
+        except Product.DoesNotExist as e:
+            return HttpResponse("e", stauts=404)
 
     def get(self, request, id):
         product = self.get_object(id)
@@ -173,7 +176,10 @@ class ProductView(View):
             "ingredients"  : [ingredient.name for ingredient in product.ingredients.all()],
             "textures"     : [texture.name for texture in product.textures.all()],
             "aromas"       : [aroma.name for aroma in product.aromas.all()],
-            "media"        : [f"{media.url}::{media.media_type}" for media in product.media.all()],
+            "media"        : [{
+                "url" : media.url,
+                "type": media.media_type
+            } for media in product.media.all()],
         }
 
         return JsonResponse({"product":product_info}, status=200)
@@ -183,24 +189,18 @@ class ProductView(View):
         product = self.get_object(id)
 
         try:
-            media      = data['media']
-            pattern    = re.compile('::')
+            media    = data['media']
             media_objs = product.media.all()
             
             for index in range(len(media)):
-                if media[index]:
-                    seperator                    = pattern.search(media[index]).span()
-                    url, media_type              = media[index][:seperator[0]], media[index][seperator[1]:]
-                    if index < len(media_objs):
-                        media_obj            = media_objs[index]
-                        media_obj.url        = url
-                        media_obj.media_type = media_type
-                        media_obj.save()
-                    else:
-                        Media.objects.get_or_create(url=url, media_type=media_type, products=product)
+                url, media_type = media[index]['url'], media[index]['type']
+                if index < len(media_objs):
+                    media_objs[index].url        = url
+                    media_objs[index].media_type = media_type
+                    media_objs[index].save()
                 else:
-                    return HttpResponse("EMPTY_NO_ALLOWED", status=400)
-                
+                    Media.objects.get_or_create(url=url, media_type=media_type, products=product)
+
             return HttpResponse("SUCCESSFULLY_UPDATED", status=200)
         
         except KeyError as e:
