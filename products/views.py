@@ -119,36 +119,34 @@ class ProductsView(View):
 
 class ProductCategoryView(View):
     def get(self, request):
-        try:
-            subcategories = SubCategory.objects.prefetch_related('products').all()
+        
+        subcategories = SubCategory.objects.prefetch_related('products').all()
 
-            categories = [{
-                    "id"           : subcategory.category.id,
-                    "type"         : subcategory.category.name,
-                    "subcategories": [
-                        {
-                            "id"         : subcategory.id,
-                            "name"       : subcategory.name,
-                            "productList": [{
-                    "id"      : product.pk,
-                    "name"    : product.name,
-                    "capacity": product.size,
-                    "price"   : product.price,
-                } for product in subcategory.products.all()],
-                        }
-                    ]
-                } for subcategory in subcategories]
-            
-            return JsonResponse({
-                "total_cat_sub_prod": [
-                    Category.objects.all().count(), 
-                    subcategories.count(), 
-                    Product.objects.all().count()
-                    ],
-                "categories"        : categories
-                }, status=200)
-        except:
-            return HttpResponse("BAD_REQUEST", status=404)
+        categories = [{
+                "id"           : subcategory.category.id,
+                "type"         : subcategory.category.name,
+                "subcategories": [
+                    {
+                        "id"         : subcategory.id,
+                        "name"       : subcategory.name,
+                        "productList": [{
+                "id"      : product.pk,
+                "name"    : product.name,
+                "capacity": product.size,
+                "price"   : product.price,
+                        } for product in subcategory.products.all()],
+                    }
+                ]
+            } for subcategory in subcategories]
+                
+        return JsonResponse({
+            "total_cat_sub_prod": [
+                Category.objects.all().count(), 
+                subcategories.count(), 
+                Product.objects.all().count()
+                ],
+            "categories"        : categories
+            }, status=200)
 
 class ProductView(View):
     def get_object(self, id):
@@ -163,7 +161,7 @@ class ProductView(View):
         product_info = {
             "id"           : product.pk,
             "name"         : product.name,
-            "category"     : product.subcategories.all()[0].category.name,
+            "category"     : product.subcategories.first().category.name,
             "subcategories": [subcat.name for subcat in product.subcategories.all()],
             "size"         : product.size,
             "dosage"       : product.dosage,
