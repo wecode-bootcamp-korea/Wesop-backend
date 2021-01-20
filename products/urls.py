@@ -3,4 +3,3 @@ from products.views import ProductListView
 
 urlpatterns = [
     path('/product', ProductListView.as_view())
-]

@@ -24,7 +24,7 @@ class Product(models.Model):
     size           = models.CharField(max_length=20)
     dosage         = models.CharField(max_length=20)
     description    = models.TextField()
-    manual         = models.TextField()
+    manual         = models.TextField(null=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
     subcategories  = models.ManyToManyField(SubCategory, related_name="products")
     skin_types     = models.ManyToManyField("Skin", related_name="products", null=True)
@@ -40,8 +40,9 @@ class Product(models.Model):
         return self.name
 
 class Media(models.Model):
-    url        = models.URLField(max_length=200)
-    media_type = models.CharField(max_length=200, default="image")
+
+    url        = models.URLField(max_length=200, null = True)
+    media_type = models.CharField(max_length=200, null=True)
     products   = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="media")
       
     class Meta:
@@ -54,7 +55,7 @@ class Skin(models.Model):
     name = models.CharField(max_length=50)
     
     class Meta:
-        db_table = 'skin_types'
+        db_table = 'skin'
     
     def __str__(self):
         return self.name
