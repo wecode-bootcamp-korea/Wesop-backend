@@ -58,7 +58,7 @@ class ProductsView(View):
                 "media"        : [{
                     "url" : media.url,
                     "type": media.media_type
-                } for media in product.media.all()],
+                } for media in product.media.all()]
             } for product in products]
 
         return JsonResponse({"products": my_product}, status=200)
