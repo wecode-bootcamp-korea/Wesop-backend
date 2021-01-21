@@ -43,7 +43,7 @@ class ProductsView(View):
         my_product = [{
                 "id"           : product.pk,
                 "name"         : product.name,
-                "category"     : product.subcategories.all()[0].category.name,
+                "category"     : product.subcategories.all().first().category.name,
                 "subcategories": [subcat.name for subcat in product.subcategories.all()],
                 "size"         : product.size,
                 "dosage"       : product.dosage,
