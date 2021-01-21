@@ -1,7 +1,7 @@
 from django.db import models
 
 class Category(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'categories'
@@ -10,7 +10,7 @@ class Category(models.Model):
         return self.name
     
 class SubCategory(models.Model):
-    name     = models.CharField(max_length=20)
+    name     = models.CharField(max_length=100)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="sub_categories")
 
     class Meta:
@@ -20,9 +20,9 @@ class SubCategory(models.Model):
         return self.name
 
 class Product(models.Model):
-    name           = models.CharField(max_length=20)
-    size           = models.CharField(max_length=20)
-    dosage         = models.CharField(max_length=20)
+    name           = models.CharField(max_length=100)
+    size           = models.CharField(max_length=100)
+    dosage         = models.CharField(max_length=100)
     description    = models.TextField()
     manual         = models.TextField(null=True)
     price          = models.DecimalField(max_digits=10, decimal_places=2)
@@ -40,8 +40,9 @@ class Product(models.Model):
         return self.name
 
 class Media(models.Model):
+
     url        = models.URLField(max_length=200, null = True)
-    media_type = models.CharField(max_length=200, null=True)
+    media_type = models.CharField(max_length=50, null=True)
     products   = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="media")
       
     class Meta:
@@ -51,7 +52,7 @@ class Media(models.Model):
         return f"media_{self.pk}"
 
 class Skin(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
     
     class Meta:
         db_table = 'skin'
@@ -60,7 +61,7 @@ class Skin(models.Model):
         return self.name
 
 class Feel(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'feels'
@@ -69,7 +70,7 @@ class Feel(models.Model):
         return self.name
 
 class Ingredient(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'ingredients'
@@ -78,7 +79,7 @@ class Ingredient(models.Model):
         return self.name
 
 class Texture(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
  
     class Meta:
         db_table = 'textures'
@@ -87,11 +88,10 @@ class Texture(models.Model):
         return self.name
     
 class Aroma(models.Model):
-    name = models.CharField(max_length=20)
+    name = models.CharField(max_length=100)
 
     class Meta:
         db_table = 'aromas'
     
     def __str__(self):
         return self.name
-
